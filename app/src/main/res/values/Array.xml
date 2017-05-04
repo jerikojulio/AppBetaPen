@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="drawerIconLst">
+        <item>@drawable/topi01sd</item>
+        <item>@drawable/topi02smp</item>
+        <item>@drawable/topi03sma</item>
+        <item>@drawable/topi04ms</item>
+        <item>@drawable/topi05u</item>
+        <item>@drawable/topi06s</item>
+    </array>
+
+    <array name="imageHLlist">
+        <!--SD-->
+        <item>@drawable/ai33</item>
+        <item>@drawable/ai32</item>
+        <item>@drawable/ai31</item>
+
+        <item>@drawable/ai30</item>
+        <item>@drawable/articleimage29</item>
+        <item>@drawable/articleimage28</item>
+        <item>@drawable/articleimage27</item>
+        <item>@drawable/articleimage26</item>
+
+        <item>@drawable/articleimage25</item>
+        <item>@drawable/articleimage24</item>
+        <item>@drawable/articleimage23</item>
+        <item>@drawable/articleimage22</item>
+        <item>@drawable/articleimage11</item>
+
+        <!-- SMP -->
+        <item>@drawable/aismp44</item>
+
+        <item>@drawable/aismp43</item>
+        <item>@drawable/aismp42</item>
+        <item>@drawable/aismp41</item>
+        <item>@drawable/aismp40</item>
+        <item>@drawable/aismp39</item>
+
+        <item>@drawable/aismp38</item>
+        <item>@drawable/aismp37</item>
+        <item>@drawable/aismp36</item>
+        <item>@drawable/aismp35</item>
+        <item>@drawable/ai34</item>
+
+        <item>@drawable/articleimage12</item>
+        <item>@drawable/articleimage07</item>
+        <item>@drawable/articleimage06</item>
+        <item>@drawable/articleimage08</item>
+        <item>@drawable/articleimage01</item>
+
+        <!-- SMA -->
+        <item>@drawable/aisma56</item>
+        <item>@drawable/aisma55</item>
+
+        <item>@drawable/aisma54</item>
+        <item>@drawable/aisma53</item>
+        <item>@drawable/aisma52</item>
+        <item>@drawable/aisma51</item>
+        <item>@drawable/aisma50</item>
+
+        <item>@drawable/aisma49</item>
+        <item>@drawable/aisma48</item>
+        <item>@drawable/aisma47</item>
+        <item>@drawable/aisma46</item>
+        <item>@drawable/aisma45</item>
+
+        <item>@drawable/articleimage09</item>
+        <item>@drawable/articleimage10</item>
+        <item>@drawable/articleimage02</item>
+        <item>@drawable/articleimage03</item>
+        <item>@drawable/articleimage04</item>
+
+        <!-- Mahasiswa-->
+        <item>@drawable/aims74</item>
+        <item>@drawable/aims73</item>
+        <item>@drawable/aims72</item>
+
+        <item>@drawable/aims71</item>
+        <item>@drawable/aims70</item>
+        <item>@drawable/aims69</item>
+        <item>@drawable/aims68</item>
+        <item>@drawable/aims67</item>
+
+        <item>@drawable/aims66</item>
+        <item>@drawable/aims65</item>
+        <item>@drawable/aims64</item>
+        <item>@drawable/aims63</item>
+        <item>@drawable/aims62</item>
+
+        <item>@drawable/aims61</item>
+        <item>@drawable/aims60</item>
+        <item>@drawable/aims59</item>
+        <item>@drawable/aims58</item>
+        <item>@drawable/aims57</item>
+
+        <item>@drawable/articleimage05</item>
+        <item>@drawable/articleimage13</item> <!-- Profil Ki Hadjar Dewantara, Pelopor Pendidikan Indonesia -->
+        <item>@drawable/defaultimage02</item> <!-- Untuk Pendidikan, Untuk Kebahagiaan-->
+        <item>@drawable/articleimage15</item><!-- SBMPTN 2016: Penjelasan Ringkas dan Singkat -->
+        <item>@drawable/articleimage16</item><!-- R.A. Kartini: Dari Gelap Menuju Terang -->
+
+        <!-- Umum-->
+        <item>@drawable/aium80</item>
+        <item>@drawable/aium79</item>
+        <item>@drawable/aium78</item>
+
+        <item>@drawable/aium77</item>
+        <item>@drawable/aium76</item>
+        <item>@drawable/aium75</item>
+        <item>@drawable/aium74</item>
+        <item>@drawable/aium73</item>
+
+        <item>@drawable/aium72</item>
+        <item>@drawable/aium71</item>
+        <item>@drawable/aium70</item>
+        <item>@drawable/aium69</item>
+        <item>@drawable/articleimage17</item><!--Beragam Ujian Nasional di Indonesia-->
+
+        <item>@drawable/articleimage18</item><!--3 Bekal Pendidikan!-->
+        <item>@drawable/articleimage19</item><!--Pahlawan Tanpa Tanda Jasa yang Terabaikan-->
+        <item>@drawable/defaultimage02</item><!--AcehFokus, Portal Berita Online Independen dari Aceh-->
+        <item>@drawable/articleimage21</item><!--Sekolah. Ringan atau Berat?-->
+        <item>@drawable/defaultimage02</item><!--Siaran Pers Bantupendidikan.org-->
+    </array>
+
+</resources>
