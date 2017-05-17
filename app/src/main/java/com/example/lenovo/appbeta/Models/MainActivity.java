@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,43 +58,39 @@ public class MainActivity extends AppCompatActivity{
             // and get whatever id is
         }
 
-        if (kategori == 0)
-        {
-            populateListSD();
-            registerOnClickMethodSD();
-        }
-        else if (kategori == 1)
-        {
-            populateListSmp();
-            registerOnClickMethodSmp();
-        }
-        else if (kategori == 2)
-        {
-            populateListSma();
-            registerOnClickMethodSma();
-        }
-        else if (kategori == 3)
-        {
-            populateListMahasw();
-            registerOnClickMethodMahasw();
-        }
-        else if (kategori == 4)
-        {
-            populateListUmum();
-            registerOnClickMethodUmum();
-        }
-        else
-        {
-            populatelistSemua();
-            registerOnClickMethod();
-        }
+        String category = new String();
 
-        //for(int i=0; i<13; i++){
-        //    if (check.equals(kategoriArtikel[i])){;}
-        //    else if (check.equals("semua")){;}
-        //    else {adapter.remove(listName[i]);}
-        //}
-
+        switch(kategori) {
+            case 0:
+                category = "SD";
+                populateList(category);
+                registerOnClickMethod(category);
+                break;
+            case 1:
+                category = "SMP";
+                populateList(category);
+                registerOnClickMethod(category);
+                break;
+            case 2:
+                category = "SMA";
+                populateList(category);
+                registerOnClickMethod(category);
+                break;
+            case 3:
+                category = "Mahasiswa";
+                populateList(category);
+                registerOnClickMethod(category);
+                break;
+            case 4:
+                category = "Umum";
+                populateList(category);
+                registerOnClickMethod(category);
+                break;
+            default:
+                populatelistSemua();
+                registerOnClickMethodSemua();
+                break;
+        }
 
         //navdrawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
@@ -131,8 +128,8 @@ public class MainActivity extends AppCompatActivity{
                 .show();
     }
 
-    private void populateListSD()
-    {
+    private void populateList(String categoryName) {
+
         TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
         TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
         String[] listName = getResources().getStringArray(R.array.testlist);
@@ -160,7 +157,7 @@ public class MainActivity extends AppCompatActivity{
         int a = 0;
 
         for (int i = 0; i < listLength; i++){
-            if (kategori[i].equals("SD"))
+            if (kategori[i].equals(categoryName))
             {
                 a=a+1;
             }
@@ -173,251 +170,7 @@ public class MainActivity extends AppCompatActivity{
 
         Integer temp = 0;
         for (int i=0 ; i<listLength;i++){
-            if (kategori[i].equals("SD"))
-            {
-                listName2 [temp]= listName[i];
-                resIds[temp]=resIds[i];
-                resIds2[temp]=resIds2[i];
-                temp=temp+1;
-                realList[temp]=i;
-            }
-        }
-        //filter population end
-
-        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
-
-        CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
-
-        list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(kategoriAdapter);
-    }
-
-    private void populateListSmp()
-    {
-        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
-        TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
-        String[] listName = getResources().getStringArray(R.array.testlist);
-
-        //filter population
-        String[] kategori = getResources().getStringArray(R.array.kategori);
-        Integer len = listImage.length();
-        Integer len2 = listImage2.length();
-
-        Integer[]resIds = new Integer[len];
-        Integer[]resIds2 = new Integer[len2];
-
-        for (int i = 0; i < len; i++) {
-            resIds[i] = listImage.getResourceId(i, -1);
-        }
-        listImage.recycle();
-
-        for (int i = 0; i < len2; i++) {
-            resIds2[i] = listImage2.getResourceId(i, -1);
-        }
-        listImage2.recycle();
-
-
-        Integer listLength=listName.length;
-        int a = 0;
-
-        for (int i = 0; i < listLength; i++){
-            if (kategori[i].equals("SMP"))
-            {
-                a=a+1;
-            }
-        }
-
-        String[]listName2=new String[a];
-        a=a+1;
-        Integer[]realList=new Integer[a];
-
-
-        Integer temp = 0;
-        for (int i=0 ; i<listLength;i++){
-            if (kategori[i].equals("SMP"))
-            {
-                listName2 [temp]= listName[i];
-                resIds[temp]=resIds[i];
-                resIds2[temp]=resIds2[i];
-                temp=temp+1;
-                realList[temp]=i;
-            }
-        }
-        //filter population end
-
-        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
-
-        CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
-
-        list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(kategoriAdapter);
-    }
-
-    private void populateListSma()
-    {
-        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
-        TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
-        String[] listName = getResources().getStringArray(R.array.testlist);
-
-        //filter population
-        String[] kategori = getResources().getStringArray(R.array.kategori);
-        Integer len = listImage.length();
-        Integer len2 = listImage2.length();
-
-        Integer[]resIds = new Integer[len];
-        Integer[]resIds2 = new Integer[len2];
-
-        for (int i = 0; i < len; i++) {
-            resIds[i] = listImage.getResourceId(i, -1);
-        }
-        listImage.recycle();
-
-        for (int i = 0; i < len2; i++) {
-            resIds2[i] = listImage2.getResourceId(i, -1);
-        }
-        listImage2.recycle();
-
-
-        Integer listLength=listName.length;
-        int a = 0;
-
-        for (int i = 0; i < listLength; i++){
-            if (kategori[i].equals("SMA"))
-            {
-                a=a+1;
-            }
-        }
-
-        String[]listName2=new String[a];
-        a=a+1;
-        Integer[]realList=new Integer[a];
-
-
-        Integer temp = 0;
-        for (int i=0 ; i<listLength;i++){
-            if (kategori[i].equals("SMA"))
-            {
-                listName2 [temp]= listName[i];
-                resIds[temp]=resIds[i];
-                resIds2[temp]=resIds2[i];
-                temp=temp+1;
-                realList[temp]=i;
-            }
-        }
-        //filter population end
-
-        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
-
-        CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
-
-        list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(kategoriAdapter);
-    }
-
-    private void populateListMahasw()
-    {
-        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
-        TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
-        String[] listName = getResources().getStringArray(R.array.testlist);
-
-        //filter population
-        String[] kategori = getResources().getStringArray(R.array.kategori);
-        Integer len = listImage.length();
-        Integer len2 = listImage2.length();
-
-        Integer[]resIds = new Integer[len];
-        Integer[]resIds2 = new Integer[len2];
-
-        for (int i = 0; i < len; i++) {
-            resIds[i] = listImage.getResourceId(i, -1);
-        }
-        listImage.recycle();
-
-        for (int i = 0; i < len2; i++) {
-            resIds2[i] = listImage2.getResourceId(i, -1);
-        }
-        listImage2.recycle();
-
-
-        Integer listLength=listName.length;
-        int a = 0;
-
-        for (int i = 0; i < listLength; i++){
-            if (kategori[i].equals("Mahasiswa"))
-            {
-                a=a+1;
-            }
-        }
-
-        String[]listName2=new String[a];
-        a=a+1;
-        Integer[]realList=new Integer[a];
-
-
-        Integer temp = 0;
-        for (int i=0 ; i<listLength;i++){
-            if (kategori[i].equals("Mahasiswa"))
-            {
-                listName2 [temp]= listName[i];
-                resIds[temp]=resIds[i];
-                resIds2[temp]=resIds2[i];
-                temp=temp+1;
-                realList[temp]=i;
-            }
-        }
-        //filter population end
-
-        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
-
-        CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
-
-        list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(kategoriAdapter);
-    }
-
-    private void populateListUmum()
-    {
-        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
-        TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
-        String[] listName = getResources().getStringArray(R.array.testlist);
-
-        //filter population
-        String[] kategori = getResources().getStringArray(R.array.kategori);
-        Integer len = listImage.length();
-        Integer len2 = listImage2.length();
-
-        Integer[]resIds = new Integer[len];
-        Integer[]resIds2 = new Integer[len2];
-
-        for (int i = 0; i < len; i++) {
-            resIds[i] = listImage.getResourceId(i, -1);
-        }
-        listImage.recycle();
-
-        for (int i = 0; i < len2; i++) {
-            resIds2[i] = listImage2.getResourceId(i, -1);
-        }
-        listImage2.recycle();
-
-
-        Integer listLength=listName.length;
-        int a = 0;
-
-        for (int i = 0; i < listLength; i++){
-            if (kategori[i].equals("Umum"))
-            {
-                a=a+1;
-            }
-        }
-
-        String[]listName2=new String[a];
-        a=a+1;
-        Integer[]realList=new Integer[a];
-
-
-        Integer temp = 0;
-        for (int i=0 ; i<listLength;i++){
-            if (kategori[i].equals("Umum"))
+            if (kategori[i].equals(categoryName))
             {
                 listName2 [temp]= listName[i];
                 resIds[temp]=resIds[i];
@@ -609,7 +362,7 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private void registerOnClickMethodSD() {
+    private void registerOnClickMethod(final String category) {
         ListView list = (ListView) findViewById(R.id.listView);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
@@ -620,7 +373,7 @@ public class MainActivity extends AppCompatActivity{
                                             Integer listLength=listName.length;
                                             int a = 0;
                                             for (int i = 0; i < listLength; i++){
-                                                if (kategori[i].equals("SD"))
+                                                if (kategori[i].equals(category))
                                                 {
                                                     a=a+1;
                                                 }
@@ -631,7 +384,7 @@ public class MainActivity extends AppCompatActivity{
 
                                             Integer temp = 0;
                                             for (int i=0 ; i<listLength;i++){
-                                                if (kategori[i].equals("SD"))
+                                                if (kategori[i].equals(category))
                                                 {
                                                     temp=temp+1;
                                                     realList[temp]=i;
@@ -648,170 +401,7 @@ public class MainActivity extends AppCompatActivity{
         );
     }
 
-    private void registerOnClickMethodSmp() {
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            //filter population
-                                            String[] listName = getResources().getStringArray(R.array.testlist);
-                                            String[] kategori = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength=listName.length;
-                                            int a = 0;
-                                            for (int i = 0; i < listLength; i++){
-                                                if (kategori[i].equals("SMP"))
-                                                {
-                                                    a=a+1;
-                                                }
-                                            }
-
-                                            a=a+1;
-                                            Integer[]realList=new Integer[a];
-
-                                            Integer temp = 0;
-                                            for (int i=0 ; i<listLength;i++){
-                                                if (kategori[i].equals("SMP"))
-                                                {
-                                                    temp=temp+1;
-                                                    realList[temp]=i;
-                                                }
-                                            }
-                                            //filter population end
-                                            Intent intent0 = new Intent(MainActivity.this, Article.class);
-                                            intent0.putExtra("kategori", kategori);
-                                            position=position+1;
-                                            intent0.putExtra("position", realList[position]);
-                                            startActivity(intent0);
-                                        }
-                                    }
-        );
-    }
-
-    private void registerOnClickMethodSma() {
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            //filter population
-                                            String[] listName = getResources().getStringArray(R.array.testlist);
-                                            String[] kategori = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength=listName.length;
-                                            int a = 0;
-                                            for (int i = 0; i < listLength; i++){
-                                                if (kategori[i].equals("SMA"))
-                                                {
-                                                    a=a+1;
-                                                }
-                                            }
-
-                                            a=a+1;
-                                            Integer[]realList=new Integer[a];
-
-                                            Integer temp = 0;
-                                            for (int i=0 ; i<listLength;i++){
-                                                if (kategori[i].equals("SMA"))
-                                                {
-                                                    temp=temp+1;
-                                                    realList[temp]=i;
-                                                }
-                                            }
-                                            //filter population end
-                                            Intent intent0 = new Intent(MainActivity.this, Article.class);
-                                            intent0.putExtra("kategori", kategori);
-                                            position=position+1;
-                                            intent0.putExtra("position", realList[position]);
-                                            startActivity(intent0);
-                                        }
-                                    }
-        );
-    }
-
-    private void registerOnClickMethodMahasw() {
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            String[] listName = getResources().getStringArray(R.array.testlist);
-                                            String[] kategori = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength=listName.length;
-
-
-                                            //filter population
-                                            int a = 0;
-                                            for (int i = 0; i < listLength; i++){
-                                                if (kategori[i].equals("Mahasiswa"))
-                                                {
-                                                    a=a+1;
-                                                }
-                                            }
-
-                                            a=a+1;
-                                            Integer[]realList=new Integer[a];
-
-                                            Integer temp = 0;
-                                            for (int i=0 ; i<listLength;i++){
-                                                if (kategori[i].equals("Mahasiswa"))
-                                                {
-                                                    temp=temp+1;
-                                                    realList[temp]=i;
-                                                }
-                                            }
-
-                                            //filter population end
-                                            Intent intent0 = new Intent(MainActivity.this, Article.class);
-                                            intent0.putExtra("kategori", kategori);
-                                            position=position+1;
-                                            intent0.putExtra("position", realList[position]);
-                                            startActivity(intent0);
-                                        }
-                                    }
-        );
-    }
-
-    private void registerOnClickMethodUmum() {
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            //filter population
-                                            String[] listName = getResources().getStringArray(R.array.testlist);
-                                            String[] kategoriList = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength=listName.length;
-
-                                            TableListSemua filtered = new TableListSemua();
-                                            /*
-                                            int a = 0;
-                                            for (int i = 0; i < listLength; i++){
-                                                if (kategoriList[i].equals("Umum"))
-                                                {
-                                                    a=a+1;
-                                                }
-                                            }
-
-                                            a=a+1;
-                                            Integer[]realList=new Integer[a];
-
-                                            Integer temp = 0;
-                                            for (int i=0 ; i<listLength;i++){
-                                                if (kategoriList[i].equals("Umum"))
-                                                {
-                                                    temp=temp+1;
-                                                    realList[temp]=i;
-                                                }
-                                            }
-                                            */
-                                            //filter population end
-                                            Intent intent0 = new Intent(MainActivity.this, Article.class);
-                                            intent0.putExtra("kategori", kategoriList);
-                                            position=position+1;
-                                            intent0.putExtra("position", filtered.calculateListWithFilter(listLength,kategoriList ,position, "Umum"));
-                                            startActivity(intent0);
-                                        }
-                                    }
-        );
-    }
-
-    private void registerOnClickMethod() {
+    private void registerOnClickMethodSemua() {
         ListView list = (ListView) findViewById(R.id.listView);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override

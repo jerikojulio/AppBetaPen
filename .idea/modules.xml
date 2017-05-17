@@ -5,8 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/AppBeta.iml" filepath="$PROJECT_DIR$/AppBeta.iml" />
       <module fileurl="file://$PROJECT_DIR$/AppBetaPen.iml" filepath="$PROJECT_DIR$/AppBetaPen.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/facebook-android-sdk-4.15.0/facebook-android-sdk-4.15.0.iml" filepath="$PROJECT_DIR$/facebook-android-sdk-4.15.0/facebook-android-sdk-4.15.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook-android-sdk-4.15.0/facebook-android-sdk-4.15.0.iml" filepath="$PROJECT_DIR$/facebook-android-sdk-4.15.0/facebook-android-sdk-4.15.0.iml" />
     </modules>
   </component>
