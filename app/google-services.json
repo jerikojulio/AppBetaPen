@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "620462215942",
+    "firebase_url": "https://bantupen-f7f8a.firebaseio.com",
+    "project_id": "bantupen-f7f8a",
+    "storage_bucket": "bantupen-f7f8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620462215942:android:2b511673cde7070e",
+        "android_client_info": {
+          "package_name": "bantupendidikan.appbeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620462215942-1h4d8k52cm5b028lr7s35de9qeoumcl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcBfAZ2pe4SAxVmKUhUQ_Hd7w6Dg7KO3U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

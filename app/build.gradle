@@ -32,5 +32,7 @@ dependencies {
 
 
     compile 'com.facebook.android:facebook-android-sdk:4.15.0' //facebook
-    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile 'com.google.android.gms:play-services-appindexing:9.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
