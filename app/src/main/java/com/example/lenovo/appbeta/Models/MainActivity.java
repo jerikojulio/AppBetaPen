@@ -1,6 +1,7 @@
 package com.example.lenovo.appbeta.Models;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -26,6 +27,10 @@ import com.example.lenovo.appbeta.Controllers.CustomAdapterKategoriFilter02;
 import com.example.lenovo.appbeta.Controllers.TableListSemua;
 import com.example.lenovo.appbeta.R;
 import com.facebook.FacebookSdk;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity{
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+        Firebase.setAndroidContext(this);
+
         getIntent();
         Bundle extras = getIntent().getExtras();
         kategori=5;
@@ -65,6 +72,7 @@ public class MainActivity extends AppCompatActivity{
                 category = "SD";
                 populateList(category);
                 registerOnClickMethod(category);
+                getDatabase();
                 break;
             case 1:
                 category = "SMP";
@@ -448,5 +456,20 @@ public class MainActivity extends AppCompatActivity{
                                         }
                                     }
         );
+    }
+
+    private void  getDatabase(){
+    Firebase myFirebaseref = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
+        myFirebaseref.child("sd").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }
