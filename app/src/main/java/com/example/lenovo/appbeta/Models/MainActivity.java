@@ -1,16 +1,14 @@
 package com.example.lenovo.appbeta.Models;
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.lenovo.appbeta.Controllers.Article;
+import com.example.lenovo.appbeta.Controllers.CategoryAdapter;
 import com.example.lenovo.appbeta.Controllers.CustomAdapterDrawer;
 import com.example.lenovo.appbeta.Controllers.CustomAdapterKategoriFilter02;
 import com.example.lenovo.appbeta.Controllers.TableListSemua;
@@ -70,8 +69,8 @@ public class MainActivity extends AppCompatActivity{
         switch(kategori) {
             case 0:
                 category = "SD";
-                populateList(category);
-                registerOnClickMethod(category);
+//                populateList(category);
+//                registerOnClickMethod(category);
                 getDatabase();
                 break;
             case 1:
@@ -460,10 +459,19 @@ public class MainActivity extends AppCompatActivity{
 
     private void  getDatabase(){
     Firebase myFirebaseref = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
-        myFirebaseref.child("sd").addValueEventListener(new ValueEventListener() {
+    Firebase sdRef = myFirebaseref.child("sd");
+        Firebase sdChildRef = sdRef.child("1");
+
+//        Query sdQuery = sdRef.orderByChild("1").equalTo("1");
+
+//        Query sdQuery = sdRef.orderByChild("1").equalTo("1");
+        sdChildRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getValue());
+                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
+                    System.out.println(singleSnapshot);
+                }
+                System.out.println(dataSnapshot);
             }
 
             @Override
@@ -471,5 +479,125 @@ public class MainActivity extends AppCompatActivity{
 
             }
         });
+
+        /*
+        myFirebaseref.child("sd").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getValue());
+                Map<String, Object> newPost = (Map<String, Object>) dataSnapshot.getValue();
+                System.out.println(newPost);
+                                populateList("SD");
+                registerOnClickMethod("SD");
+//                populateListSD();
+//                registerOnClickMethodSD();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        */
+    }
+
+    private void populateListSD(final String[] listName, final String[] kategori) {
+
+//        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
+//        TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
+//        String[] listName = getResources().getStringArray(R.array.testlist);
+
+        //filter population
+//        String[] kategori = getResources().getStringArray(R.array.kategori);
+//        Integer len = listImage.length();
+//        Integer len2 = listImage2.length();
+
+//        Integer[]resIds = new Integer[len];
+//        Integer[]resIds2 = new Integer[len2];
+//
+//        for (int i = 0; i < len; i++) {
+//            resIds[i] = listImage.getResourceId(i, -1);
+//        }
+//        listImage.recycle();
+//
+//        for (int i = 0; i < len2; i++) {
+//            resIds2[i] = listImage2.getResourceId(i, -1);
+//        }
+//        listImage2.recycle();
+
+
+        Integer listLength=listName.length;
+        int a = 0;
+
+        for (int i = 0; i < listLength; i++){
+            if (kategori[i].equals("SD"))
+            {
+                a=a+1;
+            }
+        }
+
+        String[]listName2=new String[a];
+        a=a+1;
+        Integer[]realList=new Integer[a];
+
+
+        Integer temp = 0;
+        for (int i=0 ; i<listLength;i++){
+            if (kategori[i].equals("SD"))
+            {
+                listName2 [temp]= listName[i];
+//                resIds[temp]=resIds[i];
+//                resIds2[temp]=resIds2[i];
+                temp=temp+1;
+                realList[temp]=i;
+            }
+        }
+        //filter population end
+
+        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
+
+        CategoryAdapter kategoriAdapter = new CategoryAdapter(this, arrayName);
+
+        list = (ListView) findViewById(R.id.listView);
+        list.setAdapter(kategoriAdapter);
+    }
+
+    private void registerOnClickMethodSD(final String[] listName, final String[] kategori) {
+        ListView list = (ListView) findViewById(R.id.listView);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            //filter population
+//                                            String[] listName = getResources().getStringArray(R.array.testlist);
+//                                            String[] kategori = getResources().getStringArray(R.array.kategori);
+                                            Integer listLength=listName.length;
+                                            int a = 0;
+                                            for (int i = 0; i < listLength; i++){
+                                                if (kategori[i].equals("SD"))
+                                                {
+                                                    a=a+1;
+                                                }
+                                            }
+
+                                            a=a+1;
+                                            Integer[]realList=new Integer[a];
+
+                                            Integer temp = 0;
+                                            for (int i=0 ; i<listLength;i++){
+                                                if (kategori[i].equals("SD"))
+                                                {
+                                                    temp=temp+1;
+                                                    realList[temp]=i;
+                                                }
+                                            }
+                                            //filter population end
+                                            Intent intent0 = new Intent(MainActivity.this, Article.class);
+                                            intent0.putExtra("kategori", kategori); // merujuk untuk reload ulang page ini
+                                            position=position+1;
+                                            intent0.putExtra("position", realList[position]); //merujuk ke article
+                                            startActivity(intent0);
+                                        }
+                                    }
+        );
     }
 }

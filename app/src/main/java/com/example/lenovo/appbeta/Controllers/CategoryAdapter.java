@@ -13,9 +13,10 @@ import com.example.lenovo.appbeta.R;
 import java.util.ArrayList;
 
 /**
- * Created by LENOVO on 9/4/2016.
+ * Created by jeriko on 5/22/17.
  */
-public class CustomAdapterKategoriFilter02 extends ArrayAdapter<String>
+
+public class CategoryAdapter extends ArrayAdapter<String>
 {
     Activity context;
     ArrayList<String> listName;
@@ -24,7 +25,7 @@ public class CustomAdapterKategoriFilter02 extends ArrayAdapter<String>
     private static final int layout_type1=0;
     private static final int layout_type2=1;
 
-    public CustomAdapterKategoriFilter02(Activity context, ArrayList<String> listName, Integer[] listImage, Integer[] listImage2)
+    public CategoryAdapter(Activity context, ArrayList<String> listName)
     {
         super(context, R.layout.content_list_view,listName);
         this.context=context;
