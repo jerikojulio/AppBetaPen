@@ -31,10 +31,11 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     //nav CustomAdapterDrawer
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -58,15 +59,15 @@ public class MainActivity extends AppCompatActivity{
 
         getIntent();
         Bundle extras = getIntent().getExtras();
-        kategori=5;
+        kategori = 5;
         if (extras != null) {
-            kategori = extras.getInt("position",-1);
+            kategori = extras.getInt("position", -1);
             // and get whatever id is
         }
 
         String category = new String();
 
-        switch(kategori) {
+        switch (kategori) {
             case 0:
                 category = "SD";
 //                populateList(category);
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity{
         TypedArray navlistImage = getResources().obtainTypedArray(R.array.drawerIconLst);
         String[] navlistName = getResources().getStringArray(R.array.navlist);
 
-        mDrawerList = (ListView)findViewById(R.id.listView02);
+        mDrawerList = (ListView) findViewById(R.id.listView02);
         CustomAdapterDrawer navAdapter = new CustomAdapterDrawer(this, navlistName, navlistImage);
 
         mDrawerList.setAdapter(navAdapter);
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-       registerOnClickDrawer();
+        registerOnClickDrawer();
     }
 
     @Override
@@ -124,8 +125,7 @@ public class MainActivity extends AppCompatActivity{
                 .setTitle("Keluar")
                 .setMessage("Anda yakin keluar?")
                 .setNegativeButton("Tidak", null)
-                .setPositiveButton("Ya", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity{
         Integer len = listImage.length();
         Integer len2 = listImage2.length();
 
-        Integer[]resIds = new Integer[len];
-        Integer[]resIds2 = new Integer[len2];
+        Integer[] resIds = new Integer[len];
+        Integer[] resIds2 = new Integer[len2];
 
         for (int i = 0; i < len; i++) {
             resIds[i] = listImage.getResourceId(i, -1);
@@ -160,35 +160,33 @@ public class MainActivity extends AppCompatActivity{
         listImage2.recycle();
 
 
-        Integer listLength=listName.length;
+        Integer listLength = listName.length;
         int a = 0;
 
-        for (int i = 0; i < listLength; i++){
-            if (kategori[i].equals(categoryName))
-            {
-                a=a+1;
+        for (int i = 0; i < listLength; i++) {
+            if (kategori[i].equals(categoryName)) {
+                a = a + 1;
             }
         }
 
-        String[]listName2=new String[a];
-        a=a+1;
-        Integer[]realList=new Integer[a];
+        String[] listName2 = new String[a];
+        a = a + 1;
+        Integer[] realList = new Integer[a];
 
 
         Integer temp = 0;
-        for (int i=0 ; i<listLength;i++){
-            if (kategori[i].equals(categoryName))
-            {
-                listName2 [temp]= listName[i];
-                resIds[temp]=resIds[i];
-                resIds2[temp]=resIds2[i];
-                temp=temp+1;
-                realList[temp]=i;
+        for (int i = 0; i < listLength; i++) {
+            if (kategori[i].equals(categoryName)) {
+                listName2[temp] = listName[i];
+                resIds[temp] = resIds[i];
+                resIds2[temp] = resIds2[i];
+                temp = temp + 1;
+                realList[temp] = i;
             }
         }
         //filter population end
 
-        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
+        ArrayList<String> arrayName = new ArrayList<>(Arrays.asList(listName2));
 
         CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
 
@@ -196,8 +194,7 @@ public class MainActivity extends AppCompatActivity{
         list.setAdapter(kategoriAdapter);
     }
 
-    private void populatelistSemua()
-    {
+    private void populatelistSemua() {
         TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
         TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
         String[] listName = getResources().getStringArray(R.array.testlist);
@@ -206,8 +203,8 @@ public class MainActivity extends AppCompatActivity{
         Integer len = listImage.length();
         Integer len2 = listImage2.length();
 
-        Integer[]resIds = new Integer[len];
-        Integer[]resIds2 = new Integer[len2];
+        Integer[] resIds = new Integer[len];
+        Integer[] resIds2 = new Integer[len2];
 
         for (int i = 0; i < len; i++) {
             resIds[i] = listImage.getResourceId(i, -1);
@@ -220,38 +217,37 @@ public class MainActivity extends AppCompatActivity{
         listImage2.recycle();
 
 
-        Integer listLength=listName.length;
+        Integer listLength = listName.length;
         int a = 0;
-        for (int i = 0; i < listLength; i++){
-            a=a+1;
+        for (int i = 0; i < listLength; i++) {
+            a = a + 1;
         }
 
-        String[]listName2=new String[a];
-        a=a+1;
-        Integer[]realList=new Integer[a];
+        String[] listName2 = new String[a];
+        a = a + 1;
+        Integer[] realList = new Integer[a];
 
         String[] articleIndex = getResources().getStringArray(R.array.articleIndex);
 
         Integer temp = 0;
-        for (int i=0 ; i<listLength;i++){
+        for (int i = 0; i < listLength; i++) {
             int articleIndexInt = Integer.parseInt(articleIndex[i]);
-            articleIndexInt = articleIndexInt-1;
+            articleIndexInt = articleIndexInt - 1;
 
-            for (int b=0 ; b<listLength;b++){
-                if (articleIndexInt==b)
-                {
-                    listName2 [temp]= listName[b];
-                    resIds[temp]=resIds[b];
-                    resIds2[temp]=resIds2[b];
-                    temp=temp+1;
-                    realList[temp]=b;
+            for (int b = 0; b < listLength; b++) {
+                if (articleIndexInt == b) {
+                    listName2[temp] = listName[b];
+                    resIds[temp] = resIds[b];
+                    resIds2[temp] = resIds2[b];
+                    temp = temp + 1;
+                    realList[temp] = b;
                 }
             }
         }
 
         //filter population end
 
-        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
+        ArrayList<String> arrayName = new ArrayList<String>(Arrays.asList(listName2));
 
         CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
 
@@ -259,20 +255,18 @@ public class MainActivity extends AppCompatActivity{
         list.setAdapter(kategoriAdapter);
     }
 
-    public class CustomAdapterKategori extends ArrayAdapter<String>
-    {
+    public class CustomAdapterKategori extends ArrayAdapter<String> {
         Activity context;
         ArrayList<String> listName;
         TypedArray listImage;
-        private static final int layout_type1=0;
-        private static final int layout_type2=1;
+        private static final int layout_type1 = 0;
+        private static final int layout_type2 = 1;
 
-        public CustomAdapterKategori(Activity context, ArrayList<String> listName, TypedArray listImage)
-        {
-            super(context, R.layout.content_list_view,listName);
-            this.context=context;
-            this.listName=listName;
-            this.listImage=listImage;
+        public CustomAdapterKategori(Activity context, ArrayList<String> listName, TypedArray listImage) {
+            super(context, R.layout.content_list_view, listName);
+            this.context = context;
+            this.listName = listName;
+            this.listImage = listImage;
         }
 
 
@@ -291,24 +285,20 @@ public class MainActivity extends AppCompatActivity{
         }
 
         int layout_type;
+
         @Override
-        public int getItemViewType (int position)
-        {
-            if (position==0)
-            {
-                layout_type=layout_type1;
-            }
-            else
-            {
-                layout_type=layout_type2;
+        public int getItemViewType(int position) {
+            if (position == 0) {
+                layout_type = layout_type1;
+            } else {
+                layout_type = layout_type2;
             }
 
             return layout_type;
         }
 
         @Override
-        public int getViewTypeCount()
-        {
+        public int getViewTypeCount() {
             return 2;
         }
 
@@ -336,18 +326,16 @@ public class MainActivity extends AppCompatActivity{
 
             imageTitle.setImageResource(listImage.getResourceId(position, -1));
 
-                return rowView;
-            }
+            return rowView;
+        }
     }
-
 
 
     //test
 
     //testend
 
-    private void registerOnClickDrawer()
-    {
+    private void registerOnClickDrawer() {
         final ListView mDrawerList = (ListView) findViewById(R.id.listView02);
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -358,9 +346,9 @@ public class MainActivity extends AppCompatActivity{
                 finish();
             }
         });
-}
+    }
 
-        //navdrawer open close button
+    //navdrawer open close button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToggle.onOptionsItemSelected(item)) {
@@ -377,30 +365,28 @@ public class MainActivity extends AppCompatActivity{
                                             //filter population
                                             String[] listName = getResources().getStringArray(R.array.testlist);
                                             String[] kategori = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength=listName.length;
+                                            Integer listLength = listName.length;
                                             int a = 0;
-                                            for (int i = 0; i < listLength; i++){
-                                                if (kategori[i].equals(category))
-                                                {
-                                                    a=a+1;
+                                            for (int i = 0; i < listLength; i++) {
+                                                if (kategori[i].equals(category)) {
+                                                    a = a + 1;
                                                 }
                                             }
 
-                                            a=a+1;
-                                            Integer[]realList=new Integer[a];
+                                            a = a + 1;
+                                            Integer[] realList = new Integer[a];
 
                                             Integer temp = 0;
-                                            for (int i=0 ; i<listLength;i++){
-                                                if (kategori[i].equals(category))
-                                                {
-                                                    temp=temp+1;
-                                                    realList[temp]=i;
+                                            for (int i = 0; i < listLength; i++) {
+                                                if (kategori[i].equals(category)) {
+                                                    temp = temp + 1;
+                                                    realList[temp] = i;
                                                 }
                                             }
                                             //filter population end
                                             Intent intent0 = new Intent(MainActivity.this, Article.class);
                                             intent0.putExtra("kategori", kategori); // merujuk untuk reload ulang page ini
-                                            position=position+1;
+                                            position = position + 1;
                                             intent0.putExtra("position", realList[position]); //merujuk ke article
                                             startActivity(intent0);
                                         }
@@ -416,7 +402,7 @@ public class MainActivity extends AppCompatActivity{
                                             //filter population start
                                             String[] listName = getResources().getStringArray(R.array.testlist);
                                             String[] kategori = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength=listName.length;
+                                            Integer listLength = listName.length;
                                             String[] articleIndex = getResources().getStringArray(R.array.articleIndex);
 
 
@@ -449,29 +435,50 @@ public class MainActivity extends AppCompatActivity{
                                             //filter population end
                                             Intent intent0 = new Intent(MainActivity.this, Article.class);
                                             intent0.putExtra("kategori", kategori);
-                                            position=position+1;
-                                            intent0.putExtra("position", ListSemua.calculateList(listLength,articleIndex, position));
+                                            position = position + 1;
+                                            intent0.putExtra("position", ListSemua.calculateList(listLength, articleIndex, position));
                                             startActivity(intent0);
                                         }
                                     }
         );
     }
 
-    private void  getDatabase(){
-    Firebase myFirebaseref = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
-    Firebase sdRef = myFirebaseref.child("sd");
-        Firebase sdChildRef = sdRef.child("1");
+    private void getDatabase() {
+        Firebase firebaseDB = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
+        Firebase childSD = firebaseDB.child("sd");
+        Firebase childSMP = firebaseDB.child("smp");
 
-//        Query sdQuery = sdRef.orderByChild("1").equalTo("1");
-
-//        Query sdQuery = sdRef.orderByChild("1").equalTo("1");
-        sdChildRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        /*
+        firebaseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
-                    System.out.println(singleSnapshot);
+
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    //System.out.println(singleSnapshot);
+                    for (DataSnapshot childSnapshot : singleSnapshot.getChildren()) {
+                        System.out.println(childSnapshot);
+                        String name = (String) childSnapshot.child("text").getValue();
+                        System.out.println(name);
+                    }
                 }
-                System.out.println(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        */
+
+        childSD.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    //System.out.println(singleSnapshot);
+                    String name = (String) singleSnapshot.child("text").getValue();
+                    System.out.println(name);
+                }
             }
 
             @Override
@@ -481,16 +488,17 @@ public class MainActivity extends AppCompatActivity{
         });
 
         /*
-        myFirebaseref.child("sd").addValueEventListener(new ValueEventListener() {
+        testing loading key "smp"
+
+        childSMP.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getValue());
-                Map<String, Object> newPost = (Map<String, Object>) dataSnapshot.getValue();
-                System.out.println(newPost);
-                                populateList("SD");
-                registerOnClickMethod("SD");
-//                populateListSD();
-//                registerOnClickMethodSD();
+
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    //System.out.println(singleSnapshot);
+                    String name = (String) singleSnapshot.child("text").getValue();
+                    System.out.println(name);
+                }
             }
 
             @Override
@@ -499,6 +507,65 @@ public class MainActivity extends AppCompatActivity{
             }
         });
         */
+    }
+
+    private void populateListTemp(Array categoryName) {
+
+        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
+        TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
+        String[] listName = getResources().getStringArray(R.array.testlist);
+
+        //filter population
+        String[] kategori = getResources().getStringArray(R.array.kategori);
+        Integer len = listImage.length();
+        Integer len2 = listImage2.length();
+
+        Integer[] resIds = new Integer[len];
+        Integer[] resIds2 = new Integer[len2];
+
+        for (int i = 0; i < len; i++) {
+            resIds[i] = listImage.getResourceId(i, -1);
+        }
+        listImage.recycle();
+
+        for (int i = 0; i < len2; i++) {
+            resIds2[i] = listImage2.getResourceId(i, -1);
+        }
+        listImage2.recycle();
+
+
+        Integer listLength = listName.length;
+        int a = 0;
+
+        for (int i = 0; i < listLength; i++) {
+            if (kategori[i].equals(categoryName)) {
+                a = a + 1;
+            }
+        }
+
+        String[] listName2 = new String[a];
+        a = a + 1;
+        Integer[] realList = new Integer[a];
+
+
+        Integer temp = 0;
+        for (int i = 0; i < listLength; i++) {
+            if (kategori[i].equals(categoryName)) {
+                listName2[temp] = listName[i];
+                resIds[temp] = resIds[i];
+                resIds2[temp] = resIds2[i];
+                temp = temp + 1;
+                realList[temp] = i;
+            }
+        }
+        //filter population end
+
+        ArrayList<String> arrayName = new ArrayList<String>(Arrays.asList(listName2));
+
+        CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
+
+        list = (ListView) findViewById(R.id.listView);
+        list.setAdapter(kategoriAdapter);
     }
 
     private void populateListSD(final String[] listName, final String[] kategori) {
@@ -526,35 +593,33 @@ public class MainActivity extends AppCompatActivity{
 //        listImage2.recycle();
 
 
-        Integer listLength=listName.length;
+        Integer listLength = listName.length;
         int a = 0;
 
-        for (int i = 0; i < listLength; i++){
-            if (kategori[i].equals("SD"))
-            {
-                a=a+1;
+        for (int i = 0; i < listLength; i++) {
+            if (kategori[i].equals("SD")) {
+                a = a + 1;
             }
         }
 
-        String[]listName2=new String[a];
-        a=a+1;
-        Integer[]realList=new Integer[a];
+        String[] listName2 = new String[a];
+        a = a + 1;
+        Integer[] realList = new Integer[a];
 
 
         Integer temp = 0;
-        for (int i=0 ; i<listLength;i++){
-            if (kategori[i].equals("SD"))
-            {
-                listName2 [temp]= listName[i];
+        for (int i = 0; i < listLength; i++) {
+            if (kategori[i].equals("SD")) {
+                listName2[temp] = listName[i];
 //                resIds[temp]=resIds[i];
 //                resIds2[temp]=resIds2[i];
-                temp=temp+1;
-                realList[temp]=i;
+                temp = temp + 1;
+                realList[temp] = i;
             }
         }
         //filter population end
 
-        ArrayList<String> arrayName= new ArrayList<String>(Arrays.asList(listName2));
+        ArrayList<String> arrayName = new ArrayList<String>(Arrays.asList(listName2));
 
         CategoryAdapter kategoriAdapter = new CategoryAdapter(this, arrayName);
 
@@ -570,30 +635,28 @@ public class MainActivity extends AppCompatActivity{
                                             //filter population
 //                                            String[] listName = getResources().getStringArray(R.array.testlist);
 //                                            String[] kategori = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength=listName.length;
+                                            Integer listLength = listName.length;
                                             int a = 0;
-                                            for (int i = 0; i < listLength; i++){
-                                                if (kategori[i].equals("SD"))
-                                                {
-                                                    a=a+1;
+                                            for (int i = 0; i < listLength; i++) {
+                                                if (kategori[i].equals("SD")) {
+                                                    a = a + 1;
                                                 }
                                             }
 
-                                            a=a+1;
-                                            Integer[]realList=new Integer[a];
+                                            a = a + 1;
+                                            Integer[] realList = new Integer[a];
 
                                             Integer temp = 0;
-                                            for (int i=0 ; i<listLength;i++){
-                                                if (kategori[i].equals("SD"))
-                                                {
-                                                    temp=temp+1;
-                                                    realList[temp]=i;
+                                            for (int i = 0; i < listLength; i++) {
+                                                if (kategori[i].equals("SD")) {
+                                                    temp = temp + 1;
+                                                    realList[temp] = i;
                                                 }
                                             }
                                             //filter population end
                                             Intent intent0 = new Intent(MainActivity.this, Article.class);
                                             intent0.putExtra("kategori", kategori); // merujuk untuk reload ulang page ini
-                                            position=position+1;
+                                            position = position + 1;
                                             intent0.putExtra("position", realList[position]); //merujuk ke article
                                             startActivity(intent0);
                                         }

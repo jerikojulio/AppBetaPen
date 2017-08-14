@@ -108,6 +108,7 @@ public class CustomAdapterKategoriFilter02 extends ArrayAdapter<String>
                 imageTitle = (ImageView) rowView.findViewById(R.id.ImageView01);
 
                 //rowView.setTag(R.id.textView01, textTitle);
+
                 //rowView.setTag(R.id.ImageView01, imageTitle);
 
                 rowView.setTag(viewHolder);
