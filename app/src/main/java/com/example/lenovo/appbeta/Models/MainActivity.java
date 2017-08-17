@@ -25,6 +25,7 @@ import com.example.lenovo.appbeta.Controllers.CustomAdapterDrawer;
 import com.example.lenovo.appbeta.Controllers.CustomAdapterKategoriFilter02;
 import com.example.lenovo.appbeta.Controllers.TableListSemua;
 import com.example.lenovo.appbeta.R;
+import com.example.lenovo.appbeta.ViewModel.CategoryFilterAdapter;
 import com.facebook.FacebookSdk;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private ListView mDrawerList;
     private Integer kategori;
+    Activity currentContext;
     ListView list;
 
     @Override
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         getIntent();
         Bundle extras = getIntent().getExtras();
+
+        currentContext = this;
+
         kategori = 5;
         if (extras != null) {
             kategori = extras.getInt("position", -1);
@@ -250,6 +255,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> arrayName = new ArrayList<String>(Arrays.asList(listName2));
 
         CustomAdapterKategoriFilter02 kategoriAdapter = new CustomAdapterKategoriFilter02(this, arrayName, resIds, resIds2);
+
+        currentContext = this;
 
         list = (ListView) findViewById(R.id.listView);
         list.setAdapter(kategoriAdapter);
@@ -444,6 +451,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDatabase() {
+
         Firebase firebaseDB = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
         Firebase childSD = firebaseDB.child("sd");
         Firebase childSMP = firebaseDB.child("smp");
@@ -474,11 +482,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                ArrayList<String> dataSnapshotObject = new ArrayList<>();
+
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     //System.out.println(singleSnapshot);
                     String name = (String) singleSnapshot.child("text").getValue();
                     System.out.println(name);
+                    dataSnapshotObject.add(name);
                 }
+                System.out.println("/////////////////");
+                System.out.println("/////////////////");
+                System.out.println("/////////////////");
+                System.out.println("/////////////////");
+                System.out.println("/////////////////");
+                System.out.println(dataSnapshotObject);
+
+                CategoryFilterAdapter kategoriAdapter = new CategoryFilterAdapter(currentContext, dataSnapshotObject);
+
+                list = (ListView) findViewById(R.id.listView);
+                list.setAdapter(kategoriAdapter);
             }
 
             @Override
