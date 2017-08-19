@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.lenovo.appbeta.Controllers.Article;
+import com.example.lenovo.appbeta.Controllers.ArticleFromFireDB;
 import com.example.lenovo.appbeta.Controllers.CategoryAdapter;
 import com.example.lenovo.appbeta.Controllers.CustomAdapterDrawer;
 import com.example.lenovo.appbeta.Controllers.CustomAdapterKategoriFilter02;
@@ -35,6 +36,7 @@ import com.firebase.client.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     //nav CustomAdapterDrawer
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private ListView mDrawerList;
     private Integer kategori;
+    private ArrayList<String> parsedText;
+    private ArrayList<String> parsedTitle;
+    private ArrayList<String> parseImageUrl;
+    private ArrayList<String> parsedArticleUrl;
     Activity currentContext;
     ListView list;
 
@@ -74,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (kategori) {
             case 0:
-                category = "SD";
+                category = "sd";
 //                populateList(category);
 //                registerOnClickMethod(category);
-                getDatabase();
+                getDatabase(category);
                 break;
             case 1:
                 category = "SMP";
@@ -364,6 +370,23 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void registerOnClickMethodforFirebase() {
+        ListView list = (ListView) findViewById(R.id.listView);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                            Intent intent0 = new Intent(MainActivity.this, ArticleFromFireDB.class);
+                                            intent0.putExtra("kategori", kategori); // merujuk untuk reload ulang page ini
+                                            intent0.putExtra("parsedText",parsedText.get(position)); //merujuk ke article
+                                            intent0.putExtra("parsedImageUrl",parseImageUrl.get(position));
+                                            intent0.putExtra("parsedArticleUrl",parsedArticleUrl.get(position));
+                                            startActivity(intent0);
+                                        }
+                                    }
+        );
+    }
+
     private void registerOnClickMethod(final String category) {
         ListView list = (ListView) findViewById(R.id.listView);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -450,11 +473,10 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    private void getDatabase() {
+    private void getDatabase(String category) {
 
         Firebase firebaseDB = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
-        Firebase childSD = firebaseDB.child("sd");
-        Firebase childSMP = firebaseDB.child("smp");
+        Firebase child = firebaseDB.child(category);
 
         /*
         firebaseDB.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -478,29 +500,45 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
-        childSD.addListenerForSingleValueEvent(new ValueEventListener() {
+        child.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                ArrayList<String> dataSnapshotObject = new ArrayList<>();
+                ArrayList<String> textLists = new ArrayList<>();
+                ArrayList<String> titleLists = new ArrayList<>();
+                ArrayList<String> imageUrlLists = new ArrayList<>();
+                ArrayList<String> articleUrlLists = new ArrayList<>();
 
                 for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    //System.out.println(singleSnapshot);
-                    String name = (String) singleSnapshot.child("text").getValue();
-                    System.out.println(name);
-                    dataSnapshotObject.add(name);
-                }
-                System.out.println("/////////////////");
-                System.out.println("/////////////////");
-                System.out.println("/////////////////");
-                System.out.println("/////////////////");
-                System.out.println("/////////////////");
-                System.out.println(dataSnapshotObject);
 
-                CategoryFilterAdapter kategoriAdapter = new CategoryFilterAdapter(currentContext, dataSnapshotObject);
+                    String text = (String) singleSnapshot.child("text").getValue();
+                    String title =  (String) singleSnapshot.child("title").getValue();
+                    String imageUrl =  (String) singleSnapshot.child("imageUrl").getValue();
+                    String articleUrl = (String) singleSnapshot.child("articleUrl").getValue();
+
+                    textLists.add(text);
+                    titleLists.add(title);
+                    imageUrlLists.add(imageUrl);
+                    articleUrlLists.add(articleUrl);
+
+                }
+
+                Collections.reverse(textLists);
+                Collections.reverse(titleLists);
+                Collections.reverse(imageUrlLists);
+                Collections.reverse(articleUrlLists);
+
+                parsedTitle = titleLists;
+                parsedText = textLists;
+                parseImageUrl = imageUrlLists;
+                parsedArticleUrl = articleUrlLists;
+
+                CategoryFilterAdapter kategoriAdapter = new CategoryFilterAdapter(currentContext, parsedTitle, parseImageUrl);
 
                 list = (ListView) findViewById(R.id.listView);
                 list.setAdapter(kategoriAdapter);
+
+                registerOnClickMethodforFirebase();
             }
 
             @Override

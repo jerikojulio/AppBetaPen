@@ -1,10 +1,8 @@
 package com.example.lenovo.appbeta.Controllers;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.lenovo.appbeta.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -24,7 +23,8 @@ import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class Article extends AppCompatActivity {
+public class ArticleFromFireDB extends AppCompatActivity {
+
 
     ShareDialog shareDialog;
     CallbackManager callbackManager;
@@ -33,6 +33,11 @@ public class Article extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private String parsedTitle;
+    private String parsedText;
+    private String parsedImageUrl;
+    private String parsedArticleUrl;
+    private Bundle passedBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +50,8 @@ public class Article extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
-        getIntent();
-        Bundle bundle = getIntent().getExtras();
-        //Integer position = 1;
-        artikellistSemua();
+        setUpBundleInfos();
+        loadArticle();
 
         /*
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -79,76 +82,63 @@ public class Article extends AppCompatActivity {
     }
     */
 
-    private void artikellistSemua() {
+    private void setUpBundleInfos(){
         getIntent();
-        Bundle bundle = getIntent().getExtras();
-        //Integer position = 1;
-        Integer position = bundle.getInt("position", -1);
+        passedBundle = getIntent().getExtras();
 
-        String[] articletitle = getResources().getStringArray(R.array.testlist);
+        parsedTitle = passedBundle.getString("parsedTitle");
+        parsedText = passedBundle.getString("parsedText");
+        parsedImageUrl = passedBundle.getString("parsedImageUrl");
+        parsedArticleUrl = passedBundle.getString("parsedArticleUrl");
+
+    }
+
+
+    private void loadArticle() {
+
         TextView articletitleText = (TextView) findViewById(R.id.articletextView02);
-        articletitleText.setText(articletitle[position]);
-
-        String[] articlelist = getResources().getStringArray(R.array.articlelist);
         TextView articleTextview = (TextView) findViewById(R.id.articletextView01);
-        //articleTextview.setText(articlelist[position]);
+
+        articletitleText.setText(parsedTitle);
 
         if (Build.VERSION.SDK_INT >= 24) {
-            articleTextview.setText(Html.fromHtml(articlelist[position], -1)); // for 24 api and more
+            articleTextview.setText(Html.fromHtml(parsedText, -1)); // for 24 api and more
         } else {
-            articleTextview.setText(Html.fromHtml(articlelist[position])); // for older api
+            articleTextview.setText(Html.fromHtml(parsedText)); // for older api
         }
-
-        TypedArray imageList = getResources().obtainTypedArray(R.array.imageHLlist);
         ImageView articleImageview = (ImageView) findViewById(R.id.articleImageView01);
-        articleImageview.setImageResource(imageList.getResourceId(position, -1));
+
+        Glide
+                .with(this)
+                .load(parsedImageUrl)
+                .centerCrop()
+                .crossFade()
+                .into(articleImageview);
     }
 
     public void Share(View view) {
-        //ShareButton shareButton = (ShareButton)findViewById(R.id.fb_share_button);
-        //shareButton.setShareContent(content);
 
-        getIntent();
-        Bundle bundle = getIntent().getExtras();
-        //Integer position = 1;
-        Integer position = bundle.getInt("position", -1);
+        String finishedText;
 
-        String[] articletitle = getResources().getStringArray(R.array.testlist);
-
-        String[] articlelist = getResources().getStringArray(R.array.articlelist);
         if (Build.VERSION.SDK_INT >= 24) {
-            articlelist[position] = Html.fromHtml(articlelist[position], -1).toString(); // for 24 api and more
+            finishedText = Html.fromHtml(parsedText, -1).toString(); // for 24 api and more
         } else {
-            articlelist[position] = Html.fromHtml(articlelist[position]).toString(); // for older api
+            finishedText = Html.fromHtml(parsedText).toString(); // for older api
         }
-
-        String[] articleimageurl = getResources().getStringArray(R.array.articleimageurl);
-        String[] articleurl = getResources().getStringArray(R.array.articleurl);
 
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                    .setContentTitle(articletitle[position])
+                    .setContentTitle(parsedTitle)
                     .setContentDescription(
-                            articlelist[position])
+                            finishedText)
                     //"The 'Hello Facebook' sample  showcases simple Facebook integration")
-                    .setContentUrl(Uri.parse(articleurl[position]))
-                    .setImageUrl(Uri.parse(articleimageurl[position]))
+                    .setContentUrl(Uri.parse(parsedArticleUrl))
+                    .setImageUrl(Uri.parse(parsedImageUrl))
                     .build();
 
             shareDialog.show(linkContent);
         }
     } //facebook share
-
-    private Integer imageFilter(Integer position){
-        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
-        Integer len = listImage.length();
-        Integer[]resIds = new Integer[len];
-        for (int i = 0; i < len; i++) {
-            resIds[i] = listImage.getResourceId(i, -1);
-        }
-        listImage.recycle();
-        return resIds[position];
-    }
 
     public static boolean isAppInstalled(Context context, String packageName) {
         try {
@@ -163,19 +153,7 @@ public class Article extends AppCompatActivity {
 
     public void createInstagramIntent(View view){
 
-        getIntent();
-        Bundle bundle = getIntent().getExtras();
-        Integer position = bundle.getInt("position", -1);
-
-        //Uri file = Uri.parse("android.resource://com.example.lenovo.appbeta/drawable/ai30");
-        //Uri file = Uri.parse("android.resource://com.example.lenovo.appbeta/drawable/"+R.drawable.ai30);
-
-        //pass local drawables
-        Uri file = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + getResources().getResourcePackageName(imageFilter(position))
-                + '/' + getResources().getResourceTypeName(imageFilter(position)) + '/' + getResources().getResourceEntryName(imageFilter(position)));
-        //pass local drawables end here
-
+        Uri file = Uri.parse(parsedImageUrl);
 
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
         shareIntent.setType("image/*");
@@ -184,4 +162,5 @@ public class Article extends AppCompatActivity {
         shareIntent.setPackage("com.instagram.android");
         if (isAppInstalled(this,"com.instagram.android")){startActivity(shareIntent);}
     }
+
 }

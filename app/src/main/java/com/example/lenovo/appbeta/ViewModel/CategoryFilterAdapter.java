@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.lenovo.appbeta.R;
 
 import java.util.ArrayList;
@@ -20,20 +22,22 @@ import java.util.ArrayList;
 public class CategoryFilterAdapter extends ArrayAdapter<String>{
 
     Activity context;
-    ArrayList<String> listName;
+    ArrayList<String> parsedTitle;
+    ArrayList<String> parsedImageUrl;
     LayoutInflater inflater;
 
-    public CategoryFilterAdapter(Activity context, ArrayList<String> listName)
+    public CategoryFilterAdapter(Activity context, ArrayList<String> parsedTitle, ArrayList<String> parsedImageUrl)
     {
-        super(context, R.layout.content_list_view,listName);
-        this.context=context;
-        this.listName=listName;
+        super(context, R.layout.content_list_view,parsedTitle);
+        this.context = context;
+        this.parsedTitle = parsedTitle;
+        this.parsedImageUrl = parsedImageUrl;
     }
 
     //1
     @Override
     public int getCount() {
-        return listName.size();
+        return parsedTitle.size();
     }
 
     //2
@@ -60,14 +64,20 @@ public class CategoryFilterAdapter extends ArrayAdapter<String>{
         View rowView =  inflater.inflate(R.layout.content_list_view, null, true);
 
         TextView subtitleView = (TextView) rowView.findViewById(R.id.textView01);
+        ImageView imageView =(ImageView) rowView.findViewById(R.id.ImageView01);
 
         if (Build.VERSION.SDK_INT >= 24) {
-            subtitleView.setText(Html.fromHtml(listName.get(position),-1)); // for 24 api and more
+            subtitleView.setText(Html.fromHtml(parsedTitle.get(position),-1)); // for 24 api and more
         } else {
-            subtitleView.setText(Html.fromHtml(listName.get(position))); // for older api
+            subtitleView.setText(Html.fromHtml(parsedTitle.get(position))); // for older api
         }
 
-       //subtitleView.setText(listName.get(position));
+        Glide
+                .with(context)
+                .load(parsedImageUrl.get(position))
+                .centerCrop()
+                .crossFade()
+                .into(imageView);
 
         return rowView;
     }

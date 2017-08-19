@@ -22,7 +22,7 @@
             <ImageView
                 android:layout_marginLeft="5dp"
                 android:id="@+id/articleImageView01"
-                android:layout_width="128dp"
+                android:layout_width="330dp"
                 android:layout_height="256dp"
                 android:paddingBottom="20dp"/>
         </TableRow>
