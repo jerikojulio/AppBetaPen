@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.example.lenovo.appbeta.Controllers.Article;
 import com.example.lenovo.appbeta.Controllers.ArticleFromFireDB;
-import com.example.lenovo.appbeta.Controllers.CategoryAdapter;
 import com.example.lenovo.appbeta.Controllers.CustomAdapterDrawer;
 import com.example.lenovo.appbeta.Controllers.CustomAdapterKategoriFilter02;
 import com.example.lenovo.appbeta.Controllers.TableListSemua;
@@ -81,29 +80,38 @@ public class MainActivity extends AppCompatActivity {
         switch (kategori) {
             case 0:
                 category = "sd";
+                //"SD"
 //                populateList(category);
 //                registerOnClickMethod(category);
                 getDatabase(category);
                 break;
             case 1:
-                category = "SMP";
-                populateList(category);
-                registerOnClickMethod(category);
+                category = "smp";
+                //"SMP"
+                //populateList(category);
+               // registerOnClickMethod(category);
+                getDatabase(category);
                 break;
             case 2:
-                category = "SMA";
-                populateList(category);
-                registerOnClickMethod(category);
+                category = "sma";
+                //"SMA"
+                //populateList(category);
+//                registerOnClickMethod(category);
+                getDatabase(category);
                 break;
             case 3:
-                category = "Mahasiswa";
-                populateList(category);
-                registerOnClickMethod(category);
+//                category = "Mahasiswa";
+//                populateList(category);
+//                registerOnClickMethod(category);
+                category = "mahasiswa";
+                getDatabase(category);
                 break;
             case 4:
-                category = "Umum";
-                populateList(category);
-                registerOnClickMethod(category);
+//                category = "Umum";
+//                populateList(category);
+//                registerOnClickMethod(category);
+                category = "umum";
+                getDatabase(category);
                 break;
             default:
                 populatelistSemua();
@@ -478,28 +486,6 @@ public class MainActivity extends AppCompatActivity {
         Firebase firebaseDB = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
         Firebase child = firebaseDB.child(category);
 
-        /*
-        firebaseDB.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    //System.out.println(singleSnapshot);
-                    for (DataSnapshot childSnapshot : singleSnapshot.getChildren()) {
-                        System.out.println(childSnapshot);
-                        String name = (String) childSnapshot.child("text").getValue();
-                        System.out.println(name);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-        */
-
         child.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -520,8 +506,9 @@ public class MainActivity extends AppCompatActivity {
                     titleLists.add(title);
                     imageUrlLists.add(imageUrl);
                     articleUrlLists.add(articleUrl);
-
                 }
+
+
 
                 Collections.reverse(textLists);
                 Collections.reverse(titleLists);
@@ -546,27 +533,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        /*
-        testing loading key "smp"
-
-        childSMP.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                    //System.out.println(singleSnapshot);
-                    String name = (String) singleSnapshot.child("text").getValue();
-                    System.out.println(name);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-        */
     }
 
     private void populateListTemp(Array categoryName) {
@@ -626,101 +592,5 @@ public class MainActivity extends AppCompatActivity {
 
         list = (ListView) findViewById(R.id.listView);
         list.setAdapter(kategoriAdapter);
-    }
-
-    private void populateListSD(final String[] listName, final String[] kategori) {
-
-//        TypedArray listImage = getResources().obtainTypedArray(R.array.imageHLlist);
-//        TypedArray listImage2 = getResources().obtainTypedArray(R.array.imageHLlist);
-//        String[] listName = getResources().getStringArray(R.array.testlist);
-
-        //filter population
-//        String[] kategori = getResources().getStringArray(R.array.kategori);
-//        Integer len = listImage.length();
-//        Integer len2 = listImage2.length();
-
-//        Integer[]resIds = new Integer[len];
-//        Integer[]resIds2 = new Integer[len2];
-//
-//        for (int i = 0; i < len; i++) {
-//            resIds[i] = listImage.getResourceId(i, -1);
-//        }
-//        listImage.recycle();
-//
-//        for (int i = 0; i < len2; i++) {
-//            resIds2[i] = listImage2.getResourceId(i, -1);
-//        }
-//        listImage2.recycle();
-
-
-        Integer listLength = listName.length;
-        int a = 0;
-
-        for (int i = 0; i < listLength; i++) {
-            if (kategori[i].equals("SD")) {
-                a = a + 1;
-            }
-        }
-
-        String[] listName2 = new String[a];
-        a = a + 1;
-        Integer[] realList = new Integer[a];
-
-
-        Integer temp = 0;
-        for (int i = 0; i < listLength; i++) {
-            if (kategori[i].equals("SD")) {
-                listName2[temp] = listName[i];
-//                resIds[temp]=resIds[i];
-//                resIds2[temp]=resIds2[i];
-                temp = temp + 1;
-                realList[temp] = i;
-            }
-        }
-        //filter population end
-
-        ArrayList<String> arrayName = new ArrayList<String>(Arrays.asList(listName2));
-
-        CategoryAdapter kategoriAdapter = new CategoryAdapter(this, arrayName);
-
-        list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(kategoriAdapter);
-    }
-
-    private void registerOnClickMethodSD(final String[] listName, final String[] kategori) {
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            //filter population
-//                                            String[] listName = getResources().getStringArray(R.array.testlist);
-//                                            String[] kategori = getResources().getStringArray(R.array.kategori);
-                                            Integer listLength = listName.length;
-                                            int a = 0;
-                                            for (int i = 0; i < listLength; i++) {
-                                                if (kategori[i].equals("SD")) {
-                                                    a = a + 1;
-                                                }
-                                            }
-
-                                            a = a + 1;
-                                            Integer[] realList = new Integer[a];
-
-                                            Integer temp = 0;
-                                            for (int i = 0; i < listLength; i++) {
-                                                if (kategori[i].equals("SD")) {
-                                                    temp = temp + 1;
-                                                    realList[temp] = i;
-                                                }
-                                            }
-                                            //filter population end
-                                            Intent intent0 = new Intent(MainActivity.this, Article.class);
-                                            intent0.putExtra("kategori", kategori); // merujuk untuk reload ulang page ini
-                                            position = position + 1;
-                                            intent0.putExtra("position", realList[position]); //merujuk ke article
-                                            startActivity(intent0);
-                                        }
-                                    }
-        );
     }
 }
