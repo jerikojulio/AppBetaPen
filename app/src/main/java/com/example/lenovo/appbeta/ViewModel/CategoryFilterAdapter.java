@@ -59,9 +59,16 @@ public class CategoryFilterAdapter extends ArrayAdapter<String>{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         inflater = context.getLayoutInflater();
+        View rowView = convertView;
+
 
         // Get view for row item
-        View rowView =  inflater.inflate(R.layout.content_list_view, null, true);
+        if (position == 0){
+            rowView = inflater.inflate(R.layout.content_list_view02, null, true);
+        } else {
+            rowView =  inflater.inflate(R.layout.content_list_view, null, true);
+        }
+
 
         TextView subtitleView = (TextView) rowView.findViewById(R.id.textView01);
         ImageView imageView =(ImageView) rowView.findViewById(R.id.ImageView01);

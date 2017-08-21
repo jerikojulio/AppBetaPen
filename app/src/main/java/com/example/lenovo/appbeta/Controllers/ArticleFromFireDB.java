@@ -96,15 +96,15 @@ public class ArticleFromFireDB extends AppCompatActivity {
 
     private void loadArticle() {
 
-        TextView articletitleText = (TextView) findViewById(R.id.articletextView02);
-        TextView articleTextview = (TextView) findViewById(R.id.articletextView01);
+        TextView articleTitle = (TextView) findViewById(R.id.articletextView02);
+        TextView articleText = (TextView) findViewById(R.id.articletextView01);
 
-        articletitleText.setText(parsedTitle);
+        articleTitle.setText(parsedTitle);
 
         if (Build.VERSION.SDK_INT >= 24) {
-            articleTextview.setText(Html.fromHtml(parsedText, -1)); // for 24 api and more
+            articleText.setText(Html.fromHtml(parsedText, -1)); // for 24 api and more
         } else {
-            articleTextview.setText(Html.fromHtml(parsedText)); // for older api
+            articleText.setText(Html.fromHtml(parsedText)); // for older api
         }
         ImageView articleImageview = (ImageView) findViewById(R.id.articleImageView01);
 
