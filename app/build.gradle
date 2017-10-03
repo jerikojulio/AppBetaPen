@@ -8,8 +8,8 @@ android {
         applicationId "bantupendidikan.appbeta"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 7
-        versionName "1.01"
+        versionCode 8
+        versionName "1.02"
     }
 
     buildTypes {

@@ -25,7 +25,7 @@
 
 
         <!-- "@string/app_name" -->
-        <activity android:name=".Models.MainActivity">
+        <activity android:name=".View.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -33,13 +33,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controllers.Article"
+            android:name=".View.Article"
             android:label="@string/title_activity_main2"
-            android:parentActivityName=".Models.MainActivity"
+            android:parentActivityName=".View.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Models.MainActivity"/>
+                android:value=".View.MainActivity"/>
         </activity>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -50,7 +50,7 @@
             android:value="@integer/google_play_services_version"/>
 
         <activity
-            android:name=".Controllers.ArticleFromFireDB"
+            android:name=".View.ArticleFromFireDB"
             android:label="@string/title_activity_article_from_fire_db"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

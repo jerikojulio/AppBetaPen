@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.lenovo.appbeta.Models.FirebaseModel;
 import com.example.lenovo.appbeta.R;
 
 import java.util.ArrayList;
@@ -22,22 +23,20 @@ import java.util.ArrayList;
 public class CategoryFilterAdapter extends ArrayAdapter<String>{
 
     Activity context;
-    ArrayList<String> parsedTitle;
-    ArrayList<String> parsedImageUrl;
+    ArrayList<FirebaseModel> model;
     LayoutInflater inflater;
 
-    public CategoryFilterAdapter(Activity context, ArrayList<String> parsedTitle, ArrayList<String> parsedImageUrl)
+    public CategoryFilterAdapter(Activity context, ArrayList<FirebaseModel> model)
     {
-        super(context, R.layout.content_list_view,parsedTitle);
+        super(context, R.layout.content_list_view);
         this.context = context;
-        this.parsedTitle = parsedTitle;
-        this.parsedImageUrl = parsedImageUrl;
+        this.model = model;
     }
 
     //1
     @Override
     public int getCount() {
-        return parsedTitle.size();
+        return model.size();
     }
 
     //2
@@ -59,7 +58,7 @@ public class CategoryFilterAdapter extends ArrayAdapter<String>{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         inflater = context.getLayoutInflater();
-        View rowView = convertView;
+        View rowView;
 
 
         // Get view for row item
@@ -74,14 +73,14 @@ public class CategoryFilterAdapter extends ArrayAdapter<String>{
         ImageView imageView =(ImageView) rowView.findViewById(R.id.ImageView01);
 
         if (Build.VERSION.SDK_INT >= 24) {
-            subtitleView.setText(Html.fromHtml(parsedTitle.get(position),-1)); // for 24 api and more
+            subtitleView.setText(Html.fromHtml(model.get(position).parsedTitle,-1)); // for 24 api and more
         } else {
-            subtitleView.setText(Html.fromHtml(parsedTitle.get(position))); // for older api
+            subtitleView.setText(Html.fromHtml(model.get(position).parsedTitle)); // for older api
         }
 
         Glide
                 .with(context)
-                .load(parsedImageUrl.get(position))
+                .load(model.get(position).parsedImageUrl)
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
