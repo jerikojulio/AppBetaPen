@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -173,8 +174,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDatabase(String category) {
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         DatabaseReference currentDB = FirebaseDatabase.getInstance().getReference();
 

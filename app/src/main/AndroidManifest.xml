@@ -4,7 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-->
+    calls ".Extensions.FirebaseOfflineInitializer"
+    to do offline initializer for Firebase-->
+    
     <application
+
+        android:name=".Extensions.FirebaseOfflineInitializer"
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher2"
         android:label="@string/app_name"
