@@ -1,4 +1,4 @@
-package com.example.lenovo.appbeta.Extensions;
+package com.example.lenovo.appbeta.Extender;
 
 import android.app.Application;
 

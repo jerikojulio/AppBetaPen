@@ -7,10 +7,10 @@
     <!-->
     calls ".Extensions.FirebaseOfflineInitializer"
     to do offline initializer for Firebase-->
-    
+
     <application
 
-        android:name=".Extensions.FirebaseOfflineInitializer"
+        android:name=".Extender.FirebaseOfflineInitializer"
 
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher2"
