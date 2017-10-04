@@ -19,10 +19,11 @@ import com.example.lenovo.appbeta.R;
 import com.example.lenovo.appbeta.ViewModel.CategoryFilterAdapter;
 import com.example.lenovo.appbeta.ViewModel.CustomAdapterDrawer;
 import com.facebook.FacebookSdk;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.app_title); //set logo
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-
-        Firebase.setAndroidContext(this);
 
         getIntent();
         Bundle extras = getIntent().getExtras();
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                             Intent intent0 = new Intent(MainActivity.this, ArticleFromFireDB.class);
                                             intent0.putExtra("kategori", kategori); // merujuk untuk reload ulang page ini
                                             intent0.putExtra("parsedTitle", fireModel.get(position).parsedTitle);
-                                            intent0.putExtra("parsedText",fireModel.get(position).parsedText); //merujuk ke article
+                                            intent0.putExtra("parsedText", fireModel.get(position).parsedText); //merujuk ke article
                                             intent0.putExtra("parsedImageUrl", fireModel.get(position).parsedImageUrl);
                                             intent0.putExtra("parsedArticleUrl", fireModel.get(position).parsedArticleUrl);
                                             startActivity(intent0);
@@ -175,7 +174,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDatabase(String category) {
 
-        Firebase firebaseDB = new Firebase("https://bantupen-f7f8a.firebaseio.com/");
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        DatabaseReference currentDB = FirebaseDatabase.getInstance().getReference();
 
         final ArrayList<String> listOfCategory = new ArrayList<>();
 
@@ -193,51 +194,52 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        for (final String currentCategory: listOfCategory){
+        for (final String currentCategory : listOfCategory) {
 
-                Firebase newChild = firebaseDB.child(currentCategory);
+            DatabaseReference currentChild = currentDB.child(currentCategory);
 
-                newChild.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
 
-                            String text = (String) singleSnapshot.child("text").getValue();
-                            String title =  (String) singleSnapshot.child("title").getValue();
-                            String imageUrl =  (String) singleSnapshot.child("imageUrl").getValue();
-                            String articleUrl = (String) singleSnapshot.child("articleUrl").getValue();
-                            String tempKey =  singleSnapshot.getKey();
+                        String text = (String) singleSnapshot.child("text").getValue();
+                        String title = (String) singleSnapshot.child("title").getValue();
+                        String imageUrl = (String) singleSnapshot.child("imageUrl").getValue();
+                        String articleUrl = (String) singleSnapshot.child("articleUrl").getValue();
+                        String tempKey = singleSnapshot.getKey();
 
-                            FirebaseModel tempModel = new FirebaseModel(text,title,imageUrl, articleUrl, tempKey);
+                        FirebaseModel tempModel = new FirebaseModel(text, title, imageUrl, articleUrl, tempKey);
 
-                            fireModel.add(tempModel);
+                        fireModel.add(tempModel);
+                    }
 
+                    Collections.sort(fireModel, new Comparator<FirebaseModel>() {
+                        @Override
+                        public int compare(FirebaseModel t1, FirebaseModel t2) {
+                            String s1 = t1.key;
+                            String s2 = t2.key;
+                            return s2.compareTo(s1);
                         }
+                    });
 
-                        Collections.sort(fireModel, new Comparator<FirebaseModel>() {
-                            @Override
-                            public int compare(FirebaseModel t1, FirebaseModel t2) {
-                                String s1 = t1.key;
-                                String s2 = t2.key;
-                                return s2.compareTo(s1);
-                            }
-                        });
+                    CategoryFilterAdapter kategoriAdapter = new CategoryFilterAdapter(currentContext, fireModel);
 
-                        CategoryFilterAdapter kategoriAdapter = new CategoryFilterAdapter(currentContext, fireModel);
+                    list = (ListView) findViewById(R.id.listView);
+                    list.setAdapter(kategoriAdapter);
 
-                        list = (ListView) findViewById(R.id.listView);
-                        list.setAdapter(kategoriAdapter);
+                    registerOnClickMethodforFirebase();
+                }
 
-                        registerOnClickMethodforFirebase();
-                    }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
+                }
+            };
 
-                    }
-                });
+            currentChild.orderByKey().addListenerForSingleValueEvent(postListener);
 
-            }
+        }
     }
 }

@@ -26,22 +26,22 @@ android {
 
 repositories {
     mavenCentral() //facebook
-
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    //compile 'com.google.firebase:firebase-database:11.0.4'
+    compile 'com.google.firebase:firebase-database:11.4.2'
+    compile 'com.google.android.gms:play-services:11.4.2'
+//    compile 'com.firebase:firebase-client-android:2.5.2'
 
     //facebook
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
-    compile 'com.firebase:firebase-client-android:2.5.2'
     compile 'com.facebook.android:facebook-android-sdk:4.15.0'
-    compile 'com.google.android.gms:play-services-appindexing:9.0.0'
     compile 'com.android.support.constraint:constraint-layout:+'
 
+    //image management
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     testCompile 'junit:junit:4.12'

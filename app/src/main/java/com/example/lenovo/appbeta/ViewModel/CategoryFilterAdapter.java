@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.lenovo.appbeta.Models.FirebaseModel;
 import com.example.lenovo.appbeta.R;
 
@@ -81,6 +82,7 @@ public class CategoryFilterAdapter extends ArrayAdapter<String>{
         Glide
                 .with(context)
                 .load(model.get(position).parsedImageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
