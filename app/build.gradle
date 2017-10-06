@@ -8,8 +8,8 @@ android {
         applicationId "bantupendidikan.appbeta"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 7
-        versionName "1.01"
+        versionCode 8
+        versionName "1.02"
     }
 
     buildTypes {
@@ -26,19 +26,26 @@ android {
 
 repositories {
     mavenCentral() //facebook
-
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+
+    compile 'com.google.firebase:firebase-database:11.4.2'
+    compile 'com.google.android.gms:play-services:11.4.2'
+//    compile 'com.firebase:firebase-client-android:2.5.2'
+
+    //facebook
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.15.0'
+    compile 'com.android.support.constraint:constraint-layout:+'
 
-    compile 'com.firebase:firebase-client-android:2.5.2+'
+    //image management
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 
-    compile 'com.facebook.android:facebook-android-sdk:4.15.0' //facebook
-    compile 'com.google.android.gms:play-services-appindexing:9.0.0'
+    testCompile 'junit:junit:4.12'
 }
+
 
 apply plugin: 'com.google.gms.google-services'
