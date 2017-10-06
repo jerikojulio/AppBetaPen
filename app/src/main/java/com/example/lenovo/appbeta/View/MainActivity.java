@@ -45,14 +45,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initialSetup();
+        categorySetup();
+        setupDrawer();
+        registerOnClickDrawer();
+    }
+
+    private void initialSetup() {
         setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getSupportActionBar().setDisplayShowHomeEnabled(true); //set logo
         getSupportActionBar().setIcon(R.drawable.app_title); //set logo
-
         FacebookSdk.sdkInitialize(getApplicationContext());
+    }
 
+    private void categorySetup(){
         getIntent();
         Bundle extras = getIntent().getExtras();
 
@@ -97,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 getDatabase(category);
                 break;
         }
+    }
 
+    private void setupDrawer() {
         //navdrawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -112,8 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-
-        registerOnClickDrawer();
     }
 
     @Override
